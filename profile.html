@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background-color: #f5f5f7;
+        }
+
+        .container {
+            display: flex;
+            height: 100vh;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 240px;
+            background-color: #3b3b8d;
+            padding: 20px;
+            color: #fff;
+            position: fixed; 
+            height: 100%; 
+            top: 0;
+            left: 0;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            margin-bottom: 40px;
+        }
+
+        .brand i {
+            font-size: 1.5rem;
+            margin-right: 10px;
+        }
+
+        .brand span {
+            font-size: 1.3rem;
+            font-weight: 600;
+        }
+
+        .menu {
+            list-style: none;
+        }
+
+        .menu-item {
+            padding: 15px;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .menu-item i {
+            font-size: 1.2rem;
+            margin-right: 15px;
+        }
+
+        .menu-item:hover,
+        .menu-item.active {
+            background-color: #4a4a97;
+            border-radius: 8px;
+        }
+
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            padding: 20px;
+            background-color: #f5f5f7;
+            margin-left: 260px; 
+        }
+
+        /* Header */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            font-size: 1.8rem;
+            font-weight: 600;
+        }
+
+        .search-bar {
+            display: flex;
+            align-items: center;
+            background-color: #fff;
+            padding: 10px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .search-bar input {
+            border: none;
+            outline: none;
+            padding-left: 10px;
+            font-size: 1rem;
+            width: 300px;
+        }
+
+        .search-bar i {
+            color: #a0a0a0;
+        }
+
+        /* User Info Section */
+        .user-info {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 30px;
+        }
+
+        .user-profile {
+            display: flex;
+        }
+
+        .profile-img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-right: 20px;
+        }
+
+        .user-details h2 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .user-plan {
+            background-color: #4a4a97;
+            color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .user-plan h3 {
+            margin-bottom: 10px;
+            font-size: 1.3rem;
+        }
+
+        .upgrade-btn {
+            background-color: #ff5a5a;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        
+        .contacts-messages {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 30px;
+        }
+
+        .contacts, .messages {
+            width: 48%;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .contacts:hover, .messages:hover {
+            transform: scale(1.05); 
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
+        }
+
+        .contact-list, .message-list {
+            list-style: none;
+            margin-top: 20px;
+        }
+
+        .contact-item, .message-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .contact-item img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .contact-info h3 {
+            font-size: 1rem;
+        }
+
+        .contact-info p {
+            color: #a0a0a0;
+        }
+
+        /* Latest Activity */
+        .latest-activity {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .activity-item span {
+            color: #4a4a97;
+            font-weight: 600;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="brand">
+                <i class="fa-solid fa-dog"></i>
+                <span>Akademi</span>
+            </div>
+            <ul class="menu">
+                <li class="menu-item active"><i class="fa fa-home"></i> Dashboard</li>
+                <li class="menu-item"><i class="fa fa-user-graduate"></i> Adopte</li>
+                <li class="menu-item"><i class="fa fa-chalkboard-teacher"></i> Rehome</li>
+                <li class="menu-item"><i class="fa fa-user"></i> User</li>
+                <li class="menu-item"><i class="fa fa-comment"></i> Chat</li>
+                <li class="menu-item"><i class="fa fa-tasks"></i> Latest Activity</li>
+            </ul>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Header -->
+            <div class="header">
+                <h1>User Dashboard</h1>
+                <div class="search-bar">
+                    <input type="text" placeholder="Search here...">
+                    <i class="fa fa-search"></i>
+                </div>
+            </div>
+
+            <!-- User Section -->
+            <div class="user-info">
+                <div class="user-profile">
+                    <img src="profile.jpeg" alt="Profile" class="profile-img">
+                    <div class="user-details">
+                        <h2>Nabila Azalea</h2>
+                        <p>Admin</p>
+                        <p><i class="fa fa-map-marker-alt"></i> Jakarta, Indonesia</p>
+                        <p><i class="fa fa-phone"></i> +12 345 6789 0</p>
+                        <p><i class="fa fa-envelope"></i> jordan@mail.com</p>
+                    </div>
+                </div>
+
+                <div class="user-plan">
+                    <div class="plan-info">
+                        <h3>adopt or rehome</h3>
+                        <p>Limited Features</p>
+                        <button class="upgrade-btn">Upgrade Plan</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Contacts and Messages Section -->
+            <div class="contacts-messages">
+                <div class="contacts">
+                    <h2>Contacts</h2>
+                    <ul class="contact-list">
+                        <!-- Add 4 Contacts -->
+                        <li class="contact-item">
+                            <img src="profile1.jpeg" alt="User">
+                            <div class="contact-info">
+                                <h3>Samantha William</h3>
+                                <p>Class VII-A</p>
+                            </div>
+                            <i class="fa fa-envelope"></i>
+                        </li>
+                        <li class="contact-item">
+                            <img src="profile2.jpeg" alt="User">
+                            <div class="contact-info">
+                                <h3>John Doe</h3>
+                                <p>Class VII-B</p>
+                            </div>
+                            <i class="fa fa-envelope"></i>
+                        </li>
+                        <li class="contact-item">
+                            <img src="profile3.jpeg" alt="User">
+                            <div class="contact-info">
+                                <h3>Mary Jane</h3>
+                                <p>Class VII-C</p>
+                            </div>
+                            <i class="fa fa-envelope"></i>
+                        </li>
+                        <li class="contact-item">
+                            <img src="profile4.jpeg" alt="User">
+                            <div class="contact-info">
+                                <h3>Peter Parker</h3>
+                                <p>Class VII-D</p>
+                            </div>
+                            <i class="fa fa-envelope"></i>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="messages">
+                    <h2>Messages</h2>
+                    <ul class="message-list" id="message-list">
+                        <!-- Real-time messages will be added here dynamically -->
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript for Simulating Real-Time Messages -->
+    <script>
+        const messages = [
+            { name: "Samantha William", text: "Lorem ipsum dolor sit amet.", time: "12:45 PM" },
+            { name: "John Doe", text: "Are you available for the meeting?", time: "1:15 PM" },
+            { name: "Mary Jane", text: "Can you send me the document?", time: "2:30 PM" }
+        ];
+
+        function addMessage(message) {
+            const messageList = document.getElementById('message-list');
+            const messageItem = document.createElement('li');
+            messageItem.classList.add('message-item');
+            messageItem.innerHTML = `
+                <div class="message-info">
+                    <h3>${message.name}</h3>
+                    <p>${message.text}</p>
+                </div>
+                <p>${message.time}</p>
+            `;
+            messageList.appendChild(messageItem);
+        }
+
+        // Simulate real-time messages every 5 seconds
+        let messageIndex = 0;
+        setInterval(() => {
+            if (messageIndex < messages.length) {
+                addMessage(messages[messageIndex]);
+                messageIndex++;
+            }
+        }, 5000);
+    </script>
+</body>
+</html>

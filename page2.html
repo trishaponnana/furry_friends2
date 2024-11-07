@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <title>Dog Adoption</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+
+        body {
+            background-color: #f5f5f5;
+        }
+
+        .container {
+            padding: 20px;
+        }
+
+        /* Header Section */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+        }
+
+        .header h1 {
+            font-size: 1.8rem;
+            color: #333;
+        }
+
+        .profile-img {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            object-fit: cover;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.9);
+        }
+        .profile-img:hover{
+            transform: scale(1.2);
+        }
+
+        .search-bar {
+            display: flex;
+            align-items: center;
+            background-color: #fff;
+            border-radius: 25px;
+            padding: 10px 15px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+
+        .search-bar input {
+            border: none;
+            outline: none;
+            padding-left: 10px;
+            width: 100%;
+            font-size: 1rem;
+        }
+
+        .search-bar i {
+            color: #a0a0a0;
+        }
+
+        /* Horizontal Menu */
+        .menu {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+        }
+
+        .menu-item {
+            text-align: center;
+            color: #a0a0a0;
+            padding: 10px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: transform 0.3s, color 0.3s;
+        }
+
+        .menu-item:hover {
+            transform: scale(1.2); 
+            color: #6ab04c; 
+        }
+
+        .menu-item.active {
+            color: #6ab04c;
+            font-weight: bold;
+        }
+
+        .menu-item i {
+            display: block;
+            margin-bottom: 5px;
+            color: #6ab04c;
+        }
+
+        /* Dog List Section */
+        .dog-list {
+            overflow-y: scroll;
+            height: 70vh;
+            padding-right: 15px;
+        }
+
+        .dog-item {
+            background-color: #fff;
+            border-radius: 20px;
+            padding: 15px;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            justify-content: space-between;
+            transition: transform 0.3s, box-shadow 0.3s;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .dog-item:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .dog-details {
+            display: flex;
+            align-items: center;
+        }
+
+        .dog-img {
+            width: 80px;
+            height: 80px;
+            border-radius: 15px;
+            object-fit: cover;
+            margin-right: 15px;
+        }
+
+        .dog-info {
+            text-align: left;
+        }
+
+        .dog-info h3 {
+            font-size: 1.3rem;
+            margin-bottom: 5px;
+            color: #333;
+        }
+
+        .dog-info p {
+            font-size: 0.9rem;
+            color: #999;
+        }
+
+        .dog-info .badge {
+            display: inline-block;
+            padding: 5px 10px;
+            border-radius: 12px;
+            background-color: #6ab04c;
+            color: white;
+            font-size: 0.8rem;
+            margin-top: 5px;
+        }
+
+        .adopt-btn {
+            background-color: #24d124;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 15px;
+            cursor: pointer;
+            font-size: 1rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="header">
+            <h1>Hello, Alba</h1>
+            <img src="profile .jpeg" alt="Profile Image" class="profile-img">
+        </div>
+
+        <div class="search-bar">
+            <i class="fa fa-paw"></i>
+            <input type="text" id="search-input" placeholder="Search Breed" oninput="filterDogs()">
+            <i class="fa fa-sliders"></i>
+        </div>
+    
+        <div class="menu">
+            <div class="menu-item active" onclick="filterByBreed('Labrador Retriever')">
+                <i class="fa fa-paw"></i>
+                All
+            </div>
+            <div class="menu-item" onclick="filterByBreed('Pug')">
+                Pug
+            </div>
+            <div class="menu-item" onclick="filterByBreed('Chihuahua')">
+                Chihuahua
+            </div>
+            <div class="menu-item" onclick="filterByBreed('Samoyed')">
+                Samoyed
+            </div>
+            <div class="menu-item" onclick="filterByBreed('Beagle')">
+                Beagle
+            </div>
+            <div class="menu-item" onclick="filterByBreed('Doberman')">
+                Doberman
+            </div>
+            
+        </div>
+
+        <div class="dog-list" id="dog-list">
+           
+        </div>
+    </div>
+
+    <script>
+        // Dog data
+        const dogs = [
+            { name: "Jenny", breed: "Labrador Retriever", coat: "Medium", origin: "Canada", age: "6 Yrs", weight: "7 Pounds", gender: "Female", image: "dog1.jpg" },
+            { name: "Ollie", breed: "Pug", coat: "Short", origin: "New York", age: "3 Yrs", weight: "4 Pounds", gender: "Male", image: "dog2.jpg" },
+            { name: "Coco", breed: "Chihuahua", coat: "Short", origin: "Italy", age: "1 Yr", weight: "2 Pounds", gender: "Male", image: "dog3.jpg" },
+            { name: "Buddy", breed: "Samoyed", coat: "Long", origin: "Russia", age: "2 Yrs", weight: "5 Pounds", gender: "Male", image: "dog4.jpg" },
+            { name: "Max", breed: "Beagle", coat: "Short", origin: "England", age: "4 Yrs", weight: "6 Pounds", gender: "Male", image: "dog5.jpg" },
+            { name: "Rocky", breed: "Doberman", coat: "Short", origin: "Germany", age: "3 Yrs", weight: "8 Pounds", gender: "Male", image: "dog6.jpg" }
+        ];
+
+       
+        function displayDogs(dogList) {
+            const dogListElement = document.getElementById('dog-list');
+            dogListElement.innerHTML = ''; 
+            dogList.forEach(dog => {
+                const dogItem = `
+                    <a href="#" class="dog-item">
+                        <div class="dog-details">
+                            <img src="${dog.image}" alt="${dog.name}" class="dog-img">
+                            <div class="dog-info">
+                                <h3>${dog.name}</h3>
+                                <p>Coat: ${dog.coat}</p>
+                                <p>Originated: ${dog.origin}</p>
+                                <p>Age: ${dog.age} | Weight: ${dog.weight}</p>
+                                <span class="badge">${dog.gender}</span>
+                            </div>
+                        </div>
+                        <button class="adopt-btn">Adopt</button>
+                    </a>
+                `;
+                dogListElement.innerHTML += dogItem;
+            });
+        }
+
+        
+        function filterByBreed(breed) {
+            const filteredDogs = dogs.filter(dog => dog.breed === breed);
+            displayDogs(filteredDogs);
+        }
+
+        
+        function filterDogs() {
+            const searchInput = document.getElementById('search-input').value.toLowerCase();
+            const filteredDogs = dogs.filter(dog => dog.breed.toLowerCase().includes(searchInput));
+            displayDogs(filteredDogs);
+        }
+
+        
+        displayDogs(dogs);
+    </script>
+</body>
+</html>

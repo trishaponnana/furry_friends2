@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <title>Dog Adoption Slides</title>
+    <style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: 'Arial', sans-serif;
+    }
+
+    body, html {
+        height: 100%;
+    }
+
+    .container {
+        position: relative;
+        height: 100vh;
+        width: 100%;
+        background-color: #f8f8f8;
+        overflow: hidden;
+    }
+
+    .slide {
+        position: absolute;
+        width: 60%;
+        left: 50%;
+        transform: translateX(-50%);
+        border-radius: 25px;
+        padding: 20px;
+        background-color: #fff;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    .upper-slide {
+        top: 17px;
+        height: 77%;  
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: #f5fdf5;
+        z-index: 2;  
+    }
+
+    .lower-slide {
+        bottom: 0;
+        height: 29%;  
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: #24d124;
+        margin-bottom: 68px;
+        z-index: 1;  
+    }
+
+    .content {
+        text-align: center;
+    }
+
+    .dog-icon {
+        margin-bottom: 10px;
+        font-size: 80px; 
+        color: #24d124; 
+    }
+    a{
+      color: #24d124;
+    }
+
+    h1 {
+        color: #24d124;
+        font-size: 2rem;
+    }
+
+    p {
+        margin-top: 10px;
+        color: #333;
+        font-size: 1.2rem;
+    }
+
+    /* Circular Bubble Button */
+    .bubble-btn {
+        position: absolute;
+        left: 50%;
+        bottom: 18%;
+        transform: translateX(-50%);
+        background-color: #24d124;
+        color: white;
+        padding: 20px;
+        border-radius: 50%;
+        width: 60px;
+        height: 60px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+        animation: upAndDown 1.5s ease-in-out infinite;
+        z-index: 3; 
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        flex-direction: column;
+    }
+
+
+    .bubble-btn::before, .bubble-btn::after {
+        content: '';
+        width: 15px;
+        height: 15px;
+        border-left: 2px solid white;
+        border-bottom: 2px solid white;
+        transform: rotate(135deg);
+        margin: -3px 0;
+    }
+
+    @keyframes upAndDown {
+        0%, 100% {
+            transform: translate(-50%, 0);
+        }
+        50% {
+            transform: translate(-50%, -10px);
+        }
+    }
+
+
+    .explore-text {
+        position: absolute;
+        bottom: 20px;  
+        left: 50%;
+        transform: translateX(-50%);
+        color: aliceblue;
+        font-size: 1.2rem;
+        text-align: center;
+        animation: upAndDown 1.5s ease-in-out infinite;
+    }
+
+    @media (max-width: 768px) {
+        h1 {
+            font-size: 1.8rem;
+        }
+
+        .dog-icon {
+            font-size: 70px; 
+        }
+
+        .dogs-image {
+            max-width: 200px;
+        }
+
+        .bubble-btn {
+            width: 50px;
+            height: 50px;
+        }
+    }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+       
+        <div class="slide upper-slide">
+            <div class="content">
+                <div class="dog-icon">
+                    <a href="#"><i class="fa-solid fa-shield-dog"></i></a> 
+                </div>
+                <h1>Furry Friends</h1>
+                <img src="dogs-group.png" alt="Dogs" class="dogs-image"> 
+                <p>Discover Best Friends</p>
+                <p>Planning to add a new member to your family? Let's search for your friend and name it.</p>
+            </div>
+        </div>
+
+   
+        <div class="slide lower-slide">
+            <div class="content">
+                <p class="explore-text">Swipe up to Explore</p>
+            </div>
+        </div>
+
+      
+        <div class="bubble-btn"></div>
+    </div>
+
+    <script>
+     const bubbleBtn = document.querySelector('.bubble-btn');
+     const exploreText = document.querySelector('.explore-text');
+
+     bubbleBtn.addEventListener('click', () => {
+         bubbleBtn.style.animationPlayState = 'paused';
+         exploreText.style.animationPlayState = 'paused';
+         
+         window.location.href = 'secondPage.html';  
+     });
+
+     bubbleBtn.addEventListener('mouseleave', () => {
+         bubbleBtn.style.animationPlayState = 'running';
+         exploreText.style.animationPlayState = 'running';
+     });
+    </script>
+</body>
+</html>
